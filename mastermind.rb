@@ -5,7 +5,6 @@ class Player
     @losses = 0
     @maker_guesses = 0
     @breaker_guesses = 0
-    @available_colors = %w[red green yellow orange blue purple]
   end
 end
 
@@ -15,8 +14,8 @@ class Computer < Player
     super(name)
   end
 
-  def random_color
-    @available_colors.sample
+  def random_color(color_list)
+    color_list.sample
   end
 end
 
@@ -26,6 +25,7 @@ class Game
     @code_breaker = code_breaker
     @maker_colors = []
     @max_guesses = max_guesses
+    @available_colors = %w[red green yellow orange blue purple]
   end
 
   def start_game
