@@ -42,6 +42,7 @@ class Player
 end
 
 class Computer < Player
+  attr_reader(:name)
   def initialize
     name = ['Saul Bitman', 'Ternary Tristan', 'Octal John', 'Marcus Loopius'].sample
     super(name)
@@ -96,16 +97,16 @@ class Game
     response_list = []
     guess_list.each_with_index do |color, index|
       if color == @maker_colors[index]
-        response_list << 'O'
+        response_list << 'X'
         color_frequency[color] -= 1
       elsif !color_frequency[color].zero? && @maker_colors.include?(color)
         response_list << '?'
         color_frequency[color] -= 1
       else
-        response_list << 'X'
+        response_list << '-'
       end
     end
-    "You gussed: #{response_list.join(', ')}"
+    "#{@code_breaker.name} gussed: #{response_list.join(', ')}"
   end
 
   def get_frequency(guess_list)
