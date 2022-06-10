@@ -15,7 +15,7 @@ class Computer < Player
     super(name)
   end
 
-  def guess_color
+  def random_color
     @available_colors.sample
   end
 end
