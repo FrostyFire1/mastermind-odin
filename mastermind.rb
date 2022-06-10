@@ -20,6 +20,14 @@ class Computer < Player
   end
 end
 
+class Game
+  def initialize(code_maker, code_breaker, max_guesses = 10)
+    @code_maker = code_maker
+    @code_breaker = code_breaker
+    @max_guesses = max_guesses
+  end
+end
+
 cpu = Computer.new
 
 p cpu
