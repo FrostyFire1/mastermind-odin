@@ -106,6 +106,7 @@ class Game
         response_list << '-'
       end
     end
+    response_list.shuffle!
     "#{@code_breaker.name} gussed: #{response_list.join(', ')}"
   end
 
