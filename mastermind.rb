@@ -42,7 +42,7 @@ class Game
   def set_maker_colors(remaining = 4, current = 1)
     return if remaining.zero?
 
-    puts "Please pick color ##{current}. Available colors: #{@available_colors.join(', ')}"
+    puts "Code maker, please pick color ##{current}. Available colors: #{@available_colors.join(', ')}"
     input = gets.chomp.downcase
     if @available_colors.include?(input)
       @maker_colors.push(input)
@@ -55,7 +55,8 @@ class Game
 
   def breaker_play
     puts 'Breaker\'s time to shine.'
-    puts @code_breaker.play(@available_colors)
+    guessed_colors = get_breaker_colors
+    response = guess_response
   end
 end
 
