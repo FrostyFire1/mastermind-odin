@@ -58,6 +58,21 @@ class Game
     guessed_colors = get_breaker_colors
     response = guess_response
   end
+
+  def get_breaker_colors
+    guess_list = []
+    while guess_list.length != maker_colors.length
+      puts "Brekaer, please pick color #{guess_list.length}. Available colors: #{@available_colors.join(', ')}"
+      input = gets.chomp.downcase
+      if @available_colors.include?(input)
+        guess_list.push(input)
+      else
+        puts 'Sorry, this color is not available. Please try again.'
+      end
+    end
+    guess_list
+  end
+
 end
 
 cpu = Computer.new
