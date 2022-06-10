@@ -7,10 +7,6 @@ class Player
     @breaker_guesses = 0
   end
 
-  def play(color_list)
-    puts 'Player chose nothing.'
-  end
-
   def get_breaker_colors(color_list, color_amount)
     guess_list = []
     guess_sum = 0
@@ -55,9 +51,6 @@ class Computer < Player
     color_list.sample
   end
 
-  def play(color_list)
-    random_color(color_list)
-  end
   def random_list(available, amount)
     list = []
     amount.times { list.push(random_color(available))}
