@@ -3,8 +3,6 @@ class Player
     @name = name
     @wins = 0
     @losses = 0
-    @maker_guesses = 0
-    @breaker_guesses = 0
   end
 
   def get_breaker_colors(color_list, color_amount)
@@ -73,23 +71,42 @@ class Game
     @code_breaker = code_breaker
     @maker_colors = []
     @max_guesses = max_guesses
+    @current_guess = 0
     @color_amount = color_amount
     @available_colors = %w[red green yellow orange blue purple]
   end
 
   def start_game
     @maker_colors = @code_maker.set_maker_colors(@available_colors, @color_amount)
+    puts 'Breaker\'s time to shine.'
     breaker_play
   end
 
   private
 
   def breaker_play
-    puts 'Breaker\'s time to shine.'
     guessed_colors = @code_breaker.get_breaker_colors(@available_colors, @color_amount)
-    response = guess_response(guessed_colors)
-    p guessed_colors
-    p response
+    response_list = guess_response(guessed_colors)
+    @current_guess += 1
+    if response_list.all? { |response| response == 'X' }
+      win
+      p @maker_colors
+      p guessed_colors
+    elsif @current_guess >= @max_guesses
+      lose
+      p @maker_colors
+      p guessed_colors
+    else
+      breaker_play
+    end
+  end
+
+  def win
+    "#{@code_breaker.name} won!"
+  end
+
+  def lose
+    "#{@code_breaker.name} lost!"
   end
 
   def guess_response(guess_list)
@@ -107,7 +124,8 @@ class Game
       end
     end
     response_list.shuffle!
-    "#{@code_breaker.name} gussed: #{response_list.join(', ')}"
+    puts "#{@code_breaker.name} gussed: #{response_list.join(', ')}"
+    response_list
   end
 
   def get_frequency(guess_list)
@@ -118,8 +136,7 @@ class Game
 end
 
 cpu = Computer.new
-player = Player.new('John Smith')
-
+player = Player.new('You')
 game = Game.new(player, cpu)
 
 game.start_game
