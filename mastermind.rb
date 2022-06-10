@@ -24,7 +24,13 @@ class Game
   def initialize(code_maker, code_breaker, max_guesses = 10)
     @code_maker = code_maker
     @code_breaker = code_breaker
+    @maker_colors = []
     @max_guesses = max_guesses
+  end
+
+  def start_game
+    set_maker_colors
+    breaker_play
   end
 end
 
