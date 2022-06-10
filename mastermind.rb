@@ -6,6 +6,10 @@ class Player
     @maker_guesses = 0
     @breaker_guesses = 0
   end
+
+  def play(color_list)
+    puts 'Player chose nothing.'
+  end
 end
 
 class Computer < Player
@@ -14,7 +18,7 @@ class Computer < Player
     super(name)
   end
 
-  def random_color(color_list)
+  def play(color_list)
     color_list.sample
   end
 end
@@ -47,12 +51,17 @@ class Game
       puts 'Sorry, this color is not available. Please try again.'
       set_maker_colors(remaining, current)
     end
+  end
 
+  def breaker_play
+    puts 'Breaker\'s time to shine.'
+    puts @code_breaker.play(@available_colors)
   end
 end
 
 cpu = Computer.new
+player = Player.new('John Smith')
 
-p cpu
+game = Game.new(player, cpu)
 
-puts cpu.guess_color
+game.start_game
