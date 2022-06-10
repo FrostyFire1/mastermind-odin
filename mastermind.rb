@@ -27,7 +27,7 @@ class Game
   def initialize(code_maker, code_breaker, max_guesses = 10)
     @code_maker = code_maker
     @code_breaker = code_breaker
-    @maker_colors = []
+    @maker_colors = Hash.new(0)
     @max_guesses = max_guesses
     @available_colors = %w[red green yellow orange blue purple]
   end
@@ -45,7 +45,7 @@ class Game
     puts "Code maker, please pick color ##{current}. Available colors: #{@available_colors.join(', ')}"
     input = gets.chomp.downcase
     if @available_colors.include?(input)
-      @maker_colors.push(input)
+      @maker_colors[input] += 1
       set_maker_colors(remaining - 1, current + 1)
     else
       puts 'Sorry, this color is not available. Please try again.'
@@ -60,12 +60,12 @@ class Game
   end
 
   def get_breaker_colors
-    guess_list = []
-    while guess_list.length != @maker_colors.length
+    guess_list = Hash.new(0)
+    while guess_list.values.inject(:+) != @maker_colors.values.inject(:+)
       puts "Breaker, please pick color ##{guess_list.length+1}. Available colors: #{@available_colors.join(', ')}"
       input = gets.chomp.downcase
       if @available_colors.include?(input)
-        guess_list.push(input)
+        guess_list[input] += 1
       else
         puts 'Sorry, this color is not available. Please try again.'
       end
@@ -75,6 +75,8 @@ class Game
 
   def guess_response(guess_list)
     puts 'You got a response. Yay.'
+    p @maker_colors
+    p guess_list
   end
 end
 
