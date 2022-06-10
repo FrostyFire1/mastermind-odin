@@ -32,6 +32,23 @@ class Game
     set_maker_colors
     breaker_play
   end
+
+  private 
+
+  def set_maker_colors(remaining = 4, current = 1)
+    return if remaining.zero?
+
+    puts "Please pick color ##{current}. Available colors: #{@available_colors.join(', ')}"
+    input = gets.chomp.downcase
+    if @available_colors.include?(input)
+      @maker_colors.push(input)
+      set_maker_colors(remaining - 1, current + 1)
+    else
+      puts 'Sorry, this color is not available. Please try again.'
+      set_maker_colors(remaining, current)
+    end
+
+  end
 end
 
 cpu = Computer.new
