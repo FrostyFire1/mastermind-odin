@@ -77,14 +77,16 @@ class Game
   end
 
   def start_game
+    puts "#{@code_maker.name} - Maker"
+    puts "#{@code_breaker.name} - Breaker"
     @maker_colors = @code_maker.set_maker_colors(@available_colors, @color_amount)
-    puts 'Breaker\'s time to shine.'
     breaker_play
   end
 
   private
 
   def breaker_play
+    puts "Guess ##{@current_guess+1}"
     guessed_colors = @code_breaker.get_breaker_colors(@available_colors, @color_amount)
     response_list = guess_response(guessed_colors)
     @current_guess += 1
