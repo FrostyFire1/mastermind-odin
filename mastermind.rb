@@ -56,13 +56,13 @@ class Game
   def breaker_play
     puts 'Breaker\'s time to shine.'
     guessed_colors = get_breaker_colors
-    response = guess_response
+    response = guess_response(guessed_colors)
   end
 
   def get_breaker_colors
     guess_list = []
-    while guess_list.length != maker_colors.length
-      puts "Brekaer, please pick color #{guess_list.length}. Available colors: #{@available_colors.join(', ')}"
+    while guess_list.length != @maker_colors.length
+      puts "Breaker, please pick color ##{guess_list.length+1}. Available colors: #{@available_colors.join(', ')}"
       input = gets.chomp.downcase
       if @available_colors.include?(input)
         guess_list.push(input)
@@ -73,6 +73,9 @@ class Game
     guess_list
   end
 
+  def guess_response(guess_list)
+    puts 'You got a response. Yay.'
+  end
 end
 
 cpu = Computer.new
