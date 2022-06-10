@@ -11,7 +11,7 @@ class Player
     guess_list = []
     guess_sum = 0
     while guess_sum < color_amount
-      puts "Breaker, please pick color ##{guess_sum + 1}. Available colors: #{color_list.join(', ')}"
+      puts "#{@name}, please guess color ##{guess_sum + 1}. Available colors: #{color_list.join(', ')}"
       input = gets.chomp.downcase
       if color_list.include?(input)
         guess_list.push(input)
@@ -27,7 +27,7 @@ class Player
     color_list = []
     input_sum = 0
     while input_sum < amount
-      puts "Breaker, please pick color ##{input_sum + 1}. Available colors: #{available.join(', ')}"
+      puts "#{@name}, please pick color ##{input_sum + 1} to encode. Available colors: #{available.join(', ')}"
       input = gets.chomp.downcase
       if available.include?(input)
         color_list.push(input)
@@ -91,8 +91,6 @@ class Game
     p response
   end
 
-
-
   def guess_response(guess_list)
     color_frequency = get_frequency(@maker_colors)
     response_list = []
@@ -107,7 +105,7 @@ class Game
         response_list << 'X'
       end
     end
-    response_list
+    "You gussed: #{response_list.join(', ')}"
   end
 
   def get_frequency(guess_list)
