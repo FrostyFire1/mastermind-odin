@@ -1,4 +1,5 @@
 class Player
+  attr_reader(:name)
   def initialize(name)
     @name = name
     @wins = 0
@@ -40,7 +41,6 @@ class Player
 end
 
 class Computer < Player
-  attr_reader(:name)
   def initialize
     name = ['Saul Bitman', 'Ternary Tristan', 'Octal John', 'Marcus Loopius'].sample
     super(name)
@@ -102,11 +102,11 @@ class Game
   end
 
   def win
-    "#{@code_breaker.name} won!"
+    puts "#{@code_breaker.name} won!"
   end
 
   def lose
-    "#{@code_breaker.name} lost!"
+    puts "#{@code_breaker.name} lost!"
   end
 
   def guess_response(guess_list)
@@ -136,7 +136,30 @@ class Game
 end
 
 cpu = Computer.new
-player = Player.new('You')
-game = Game.new(player, cpu)
+puts "What's your name?"
+player_name = gets.chomp
+player = Player.new(player_name)
+puts 'Welcome to mastermind! Symbol translation:'
+puts 'X - correct color and place'
+puts '? - correct color, incorrect place'
+puts '- - incorrect color'
+input = ''
+while input.empty?
+  puts 'Would you like to be the code maker or code breaker?'
+  puts '1 - Maker'
+  puts '2 - Breaker'
+  response = gets.chomp
+  if %w[1 2].include?(response)
+    input = response 
+  else
+    puts 'Invalid input. Please try again.'
+  end
+end
+maker, breaker = if input == '1'
+                  [player, cpu]
+                else
+                  [cpu, player]
+                end
+game = Game.new(maker, breaker)
 
 game.start_game
