@@ -14,8 +14,14 @@ class Computer < Player
     name = ['Saul Bitman', 'Ternary Tristan', 'Octal John', 'Marcus Loopius'].sample
     super(name)
   end
+
+  def guess_color
+    @available_colors.sample
+  end
 end
 
 cpu = Computer.new
 
 p cpu
+
+puts cpu.guess_color
