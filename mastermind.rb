@@ -10,6 +10,23 @@ class Player
   def play(color_list)
     puts 'Player chose nothing.'
   end
+
+  def set_maker_colors(available, amount = 4)
+    color_list = Hash.new(0)
+    input_sum = 0
+    while input_sum != amount
+      puts "Breaker, please pick color ##{input_sum + 1}. Available colors: #{available.join(', ')}"
+      input = gets.chomp.downcase
+      if available.include?(input)
+        color_list[input] += 1
+        input_sum += 1
+      else
+        puts 'Sorry, this color is not available. Please try again.'
+      end
+    end
+    color_list
+  end
+
 end
 
 class Computer < Player
@@ -33,25 +50,11 @@ class Game
   end
 
   def start_game
-    set_maker_colors
+    @maker_colors = @code_maker.set_maker_colors(@available_colors)
     breaker_play
   end
 
-  private 
-
-  def set_maker_colors(remaining = 4, current = 1)
-    return if remaining.zero?
-
-    puts "Code maker, please pick color ##{current}. Available colors: #{@available_colors.join(', ')}"
-    input = gets.chomp.downcase
-    if @available_colors.include?(input)
-      @maker_colors[input] += 1
-      set_maker_colors(remaining - 1, current + 1)
-    else
-      puts 'Sorry, this color is not available. Please try again.'
-      set_maker_colors(remaining, current)
-    end
-  end
+  private
 
   def breaker_play
     puts 'Breaker\'s time to shine.'
@@ -60,12 +63,14 @@ class Game
   end
 
   def get_breaker_colors
-    guess_list = Hash.new(0)
-    while guess_list.values.inject(:+) != @maker_colors.values.inject(:+)
-      puts "Breaker, please pick color ##{guess_list.length+1}. Available colors: #{@available_colors.join(', ')}"
+    guess_list = []
+    guess_sum = 0
+    while guess_sum != @maker_colors.values.inject(:+)
+      puts "Breaker, please pick color ##{guess_sum + 1}. Available colors: #{@available_colors.join(', ')}"
       input = gets.chomp.downcase
       if @available_colors.include?(input)
-        guess_list[input] += 1
+        guess_list.push(input)
+        guess_sum += 1
       else
         puts 'Sorry, this color is not available. Please try again.'
       end
